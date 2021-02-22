@@ -5,6 +5,14 @@ const Medicion = require('../models/Mediciones')
 const Asignacion = require('../models/Asignacion');
 const Dates = require('../models/Dates')
 
+router.get('/', (req, res) => {
+
+    
+    res.json({'resultado': "Arqui2 - Practica 1 :D"});
+	
+});
+
+
 router.get('/users', async (req, res) => {
 
     const users = await User.find();

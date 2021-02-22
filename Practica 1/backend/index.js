@@ -1,6 +1,6 @@
-const app = require('./app');
-const { PORT } = require('./config');
-const { connect } = require('./database');
+const app = require('./src/app');
+const { PORT } = require('./src/config');
+const { connect } = require('./src/database');
 
 app.set('port', PORT);
 
