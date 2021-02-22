@@ -68,9 +68,9 @@ router.post("/create_medicion", async (req, res) => {
 		await Medicion.create({
         
 			Fecha: data.Fecha,
-			PulsoOxigeno: data.PulsoOxigeno, 
-			RitmoCardiaco: data.RitmoCardiaco,
-			Temperatura: data.Temperatura,
+			PulsoOxigeno: Number(data.PulsoOxigeno), 
+			RitmoCardiaco: Number(data.RitmoCardiaco),
+			Temperatura: Number(data.Temperatura),
 			Username: data.Username
         
 		});   
