@@ -156,26 +156,27 @@ void loop()
 
     //send samples and calculation result to terminal program through UART
   }
-  Serial.print(F(", HR="));
-  if(heartRate >= 165){
-    heartRate = heartRate / 2;
-  }
-  Serial.print(heartRate, DEC);
+  //Serial.print(F(", HR="));
+  //Serial.print(heartRate, DEC);
 
-  Serial.print(F(", HRvalid="));
-  Serial.print(validHeartRate, DEC);
+  //Serial.print(F(", HRvalid="));
+  //Serial.print(validHeartRate, DEC);
       
-  Serial.print(F(", SPO2="));
-  Serial.print(spo2, DEC);
+  //Serial.print(F(", SPO2="));
+  //Serial.print(spo2, DEC);
 
-  Serial.print(F(", SPO2Valid="));
-  Serial.print(validSPO2, DEC);
+  //Serial.print(F(", SPO2Valid="));
+  //Serial.print(validSPO2, DEC);
 
-  Serial.println("");
+  //Serial.println("");
 
   //After gathering 25 new samples recalculate HR and SP02
   maxim_heart_rate_and_oxygen_saturation(irBuffer, bufferLength, redBuffer, &spo2, &validSPO2, &heartRate, &validHeartRate);
 
+  if(heartRate >= 165){
+    heartRate = heartRate / 2;
+  }
+  
   //SECCION DEL MODULO BLUETOOTH
   //miBT.begin(38400);//Módulo Bluetooth
   //Lee Arduino y envia a BT
