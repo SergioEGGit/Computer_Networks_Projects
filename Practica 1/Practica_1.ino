@@ -71,7 +71,7 @@ void setup()
 {
   Serial.begin(9600); // initialize serial communication at 115200 bits per second:
    miBT.begin(38400);//Módulo Bluetooth
-   miBT.write("Hola Mundo");
+   //miBT.write("Hola Mundo");
 
   // Initialize sensor
   if (!particleSensor.begin(Wire, I2C_SPEED_FAST)) //Use default I2C port, 400kHz speed
@@ -80,9 +80,9 @@ void setup()
     while (1);
   }
 
-  Serial.println(F("Attach sensor to finger with rubber band. Press any key to start conversion"));
-  while (Serial.available() == 0) ; //wait until user presses a key
-  Serial.read();
+  //Serial.println(F("Attach sensor to finger with rubber band. Press any key to start conversion"));
+  //while (Serial.available() == 0) ; //wait until user presses a key
+  //Serial.read();
 
   byte ledBrightness = 60; //Options: 0=Off to 255=50mA
   byte sampleAverage = 4; //Options: 1, 2, 4, 8, 16, 32
@@ -134,7 +134,7 @@ void loop()
   //Serial.print("*F\tObject = "); Serial.print(mlx.readObjectTempF()); Serial.println("*F");
   
   
-  //SECCION DE OXIGENACION
+  //SECCION DE OXIGENACION Y RITMO CARDIACO
   particleSensor.begin(Wire, I2C_SPEED_FAST);
   //Continuously taking samples from MAX30102.  Heart rate and SpO2 are calculated every 1 second
   //dumping the first 25 sets of samples in the memory and shift the last 75 sets of samples to the top
@@ -156,40 +156,28 @@ void loop()
 
     //send samples and calculation result to terminal program through UART
   }
+  Serial.print(F(", HR="));
+  if(heartRate >= 165){
+    heartRate = heartRate / 2;
+  }
+  Serial.print(heartRate, DEC);
+
+  Serial.print(F(", HRvalid="));
+  Serial.print(validHeartRate, DEC);
+      
   Serial.print(F(", SPO2="));
   Serial.print(spo2, DEC);
 
   Serial.print(F(", SPO2Valid="));
   Serial.print(validSPO2, DEC);
 
+  Serial.println("");
+
   //After gathering 25 new samples recalculate HR and SP02
   maxim_heart_rate_and_oxygen_saturation(irBuffer, bufferLength, redBuffer, &spo2, &validSPO2, &heartRate, &validHeartRate);
 
-  //SECCION DE LOS RITMOS CARDIACOS
-  long delta = millis() - lastBeat;
-  lastBeat = millis();
-
-  beatsPerMinute = (60 / (delta / 1000.0)) * 4  ;//Fórmula, * 4 porque solo logra captar 1/4
-
-  if (beatsPerMinute < 255 && beatsPerMinute > 20)
-  {
-    rates[rateSpot++] = (byte)beatsPerMinute; //Store this reading in the array
-    rateSpot %= RATE_SIZE; //Wrap variable
-
-    //Take average of readings
-    beatAvg = 0;
-    for (byte x = 0 ; x < RATE_SIZE ; x++)
-      beatAvg += rates[x];
-    beatAvg /= RATE_SIZE;
-  }
-  Serial.print(", BPM=");
-  Serial.print(beatsPerMinute);
-  Serial.print(", Avg BPM=");
-  Serial.print(beatAvg);
-
-  Serial.println();
-
   //SECCION DEL MODULO BLUETOOTH
+  //miBT.begin(38400);//Módulo Bluetooth
   //Lee Arduino y envia a BT
   char valores[25];
   int a = pt;
@@ -202,14 +190,18 @@ void loop()
     itoa(spo2,Ox,10);
     strcat(valores,",");
     strcat(valores,Ox);
-    
-    char RitC[5];
-    itoa(beatAvg, RitC, 10);
+  } else {
+    strcat(valores,",0");
+  }
+
+  char RitC[5];
+  if(validHeartRate == 1){
+    itoa(heartRate, RitC, 10);
     strcat(valores,",");
     strcat(valores,RitC);
   } else {
-    strcat(valores,",0,0");
+    strcat(valores,",0");
   }
-
+    
   miBT.print(valores);
 }
