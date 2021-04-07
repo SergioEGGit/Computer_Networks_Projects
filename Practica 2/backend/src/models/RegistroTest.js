@@ -7,4 +7,4 @@ const registrosSchema = new Schema({
 	Username: String
 });
 
-module.exports = model('Registro', medicionesSchema);
+module.exports = model('Registro', registrosSchema);
