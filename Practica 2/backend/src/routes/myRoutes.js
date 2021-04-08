@@ -232,9 +232,9 @@ router.get('/Get/All/Registros/:Us', async (req, res) => {
 });
 
 // Query 2 
-router.get('/Get/All/Registros/:Fe/:Us', async (req, res) => {
+router.get('/Get/All/Registros/:Fe/:Us/:Pe', async (req, res) => {
     
-	const RegistrosUser = await Registros.find({ $and: [{ Fecha: req.params.Fe }, { Username: req.params.Us }] }, function( err, result) {
+	const RegistrosUser = await Medicion.find({ $and: [{ Fecha: req.params.Fe }, { Username: req.params.Us }, { Periodo: req.params.Pe }] }, function( err, result) {
     
 		if (err) {
       
@@ -246,9 +246,8 @@ router.get('/Get/All/Registros/:Fe/:Us', async (req, res) => {
 		}	
 	});
 });
-
 // Query 3 Y 4
-router.get('/Get/All/Registros/Approved/:Us/:Es', async (req, res) => {
+router.get('/Get/All/Registros/Approved/test/:Us/:Es', async (req, res) => {
     
 	const RegistrosUser = await Registros.find({ $and: [{ Username: req.params.Us }, { Estado: req.params.Es }] }, function( err, result) {
     
