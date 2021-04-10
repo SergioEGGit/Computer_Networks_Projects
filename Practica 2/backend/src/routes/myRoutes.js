@@ -107,7 +107,7 @@ router.get('/getHistoria/:Us', async (req, res) => {
 
 router.get('/get/Mediciones/:Us/:Da', async (req, res) => {
     
-	const Mediciones = await Medicion.find().where('Username').equals(req.params.Us).where('Fecha').equals(req.params.Da);
+	const Mediciones = await Medicion.find().where('Username').equals(req.params.Us).where('Fecha').equals(req.params.Da).sort({ Periodo: 1, Distancia: 1 });
     
 	res.send(Mediciones);
 
