@@ -3,6 +3,7 @@ const router = Router();
 const User = require('../models/user');
 const Medicion = require('../models/Mediciones');
 
+// Raiz
 router.get('/', (req, res) => {
 
     
@@ -10,7 +11,7 @@ router.get('/', (req, res) => {
 	
 });
 
-
+// Todos Los Usuarios 
 router.get('/users', async (req, res) => {
 
     const users = await User.find();
@@ -18,6 +19,37 @@ router.get('/users', async (req, res) => {
 	
 });
 
+// Agregar Medicion
+router.post("/create_medicion", async (req, res) => {
+    
+	try {
+
+        const data = req.body;            
+        
+		var ArrayAux = data.Fecha.split(" ");
+		
+		await Medicion.create({
+        
+			Fecha: ArrayAux[0],
+			Hora: ArrarAux[1],
+			FechaCompleta: data.Fecha
+			Volumen: data.Volumen,
+			Tipo: data.Tipo,
+			Username: data.Username
+        
+		});   
+		
+        res.json({message : 'Medicion creada'});
+
+    } catch (error) {
+		
+        res.send({ message : error });
+    
+	}
+
+});
+
+// Agregar Usuario 
 router.post("/create_user", async (req, res) => {
     
 	try {
@@ -48,7 +80,8 @@ router.post("/create_user", async (req, res) => {
 
 });
 
-router.get('/one_user/:Us/:Pass', async (req, res) => {
+// Query 1
+router.get('/GetOneUser/:Us/:Pass', async (req, res) => {
     
 	const users = await User.find().where('Username').equals(req.params.Us).where('Password').equals(req.params.Pass);
     
@@ -56,35 +89,28 @@ router.get('/one_user/:Us/:Pass', async (req, res) => {
 
 });
 
-router.post("/create_medicion", async (req, res) => {
+// Query 2 
+router.get('/GetVO2MAXMediciones/:Us/:Fe', async (req, res) => {
     
-	try {
-
-        const data = req.body;            
-        
-		await Medicion.create({
-        
-			Fecha: data.Fecha,
-			Hora: data.Hora,
-			Volumen: data.Volumen,
-			Tipo: data.Tipo,
-			Username: data.Username
-        
-		});   
-		
-        res.json({message : 'Medicion creada'});
-
-    } catch (error) {
-		
-        res.send({ message : error });
+	const Mediciones = await Medicion.find().where('Username').equals(req.params.Us).where('FechaCompleta').equals(req.params.Fe).select('FechaCompleta Volumen Peso Tipo Username');
     
-	}
+	res.send(Mediciones);
 
 });
 
-router.get('/get/Mediciones/:Us/:Da', async (req, res) => {
+// Query 3 
+router.get('/FechasUserVO2MAX/:Us', async (req, res) => {
     
-	const Mediciones = await Medicion.find().where('Username').equals(req.params.Us).where('Fecha').equals(req.params.Da).sort({ Periodo: 1, Distancia: 1 });
+	const Mediciones = await Medicion.find().distinct('FechaCompleta').where('Username').equals(req.params.Us);
+    
+	res.send(Mediciones);
+
+});
+
+// Query 4 
+router.get('/FechasUserLiveVO2MAX', async (req, res) => {
+    
+	const Mediciones = await Medicion.limit(1).sort({FechaCompleta: -1}).select('FechaCompleta');
     
 	res.send(Mediciones);
 
