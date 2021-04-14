@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const medicionesSchema = new Schema({
+const analisisSchema = new Schema({
     Fecha: String,
 	Hora: String,
 	FechaCompleta: String,
@@ -10,4 +10,4 @@ const medicionesSchema = new Schema({
 	Username: String
 });
 
-module.exports = model('Medicion', medicionesSchema);
+module.exports = model('analisis, analisisSchema);

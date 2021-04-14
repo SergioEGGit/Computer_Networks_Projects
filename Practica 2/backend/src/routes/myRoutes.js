@@ -1,7 +1,7 @@
 const { Router } = require('express');
 const router = Router();
 const User = require('../models/user');
-const Medicion = require('../models/Mediciones');
+const Medicion = require('../models/analisis');
 
 // Raiz
 router.get('/', (req, res) => {
