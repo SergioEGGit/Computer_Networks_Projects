@@ -65,6 +65,7 @@ router.post("/create_medicion", async (req, res) => {
 		await Medicion.create({
         
 			Fecha: data.Fecha,
+			Hora: data.Hora,
 			Volumen: data.Volumen,
 			Tipo: data.Tipo,
 			Username: data.Username
