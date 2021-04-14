@@ -4,10 +4,10 @@ const analisisSchema = new Schema({
     Fecha: String,
 	Hora: String,
 	FechaCompleta: String,
-	Volumen: number,
-	Peso: number,
+	Volumen: Number,
+	Peso: Number,
 	Tipo: String,
 	Username: String
 });
 
-module.exports = model('analisis, analisisSchema);
+module.exports = model('analisis', analisisSchema);

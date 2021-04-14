@@ -32,7 +32,7 @@ router.post("/create_medicion", async (req, res) => {
         
 			Fecha: ArrayAux[0],
 			Hora: ArrarAux[1],
-			FechaCompleta: data.Fecha
+			FechaCompleta: data.Fecha,
 			Volumen: data.Volumen,
 			Tipo: data.Tipo,
 			Username: data.Username
