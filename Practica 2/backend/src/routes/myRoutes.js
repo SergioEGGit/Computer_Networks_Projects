@@ -20,7 +20,7 @@ router.get('/users', async (req, res) => {
 });
 
 // Agregar Medicion
-router.post("/create_medicion", async (req, res) => {
+router.post("/create_medicion_VO2MAX", async (req, res) => {
     
 	try {
 
@@ -31,11 +31,12 @@ router.post("/create_medicion", async (req, res) => {
 		await Medicion.create({
         
 			Fecha: ArrayAux[0],
-			Hora: ArrarAux[1],
+			Hora: ArrayAux[1],
 			FechaCompleta: data.Fecha,
 			Volumen: data.Volumen,
 			Tipo: data.Tipo,
-			Username: data.Username
+			Username: data.Username,
+			Peso: data.Peso
         
 		});   
 		
@@ -43,7 +44,7 @@ router.post("/create_medicion", async (req, res) => {
 
     } catch (error) {
 		
-        res.send({ message : error });
+        res.json({ message : error });
     
 	}
 
@@ -85,14 +86,14 @@ router.get('/GetOneUser/:Us/:Pass', async (req, res) => {
     
 	const users = await User.find().where('Username').equals(req.params.Us).where('Password').equals(req.params.Pass);
     
-	res.send(users);
+	res.send(users[0]);
 
 });
 
 // Query 2 
 router.get('/GetVO2MAXMediciones/:Us/:Fe', async (req, res) => {
     
-	const Mediciones = await Medicion.find().where('Username').equals(req.params.Us).where('FechaCompleta').equals(req.params.Fe).select('FechaCompleta Volumen Peso Tipo Username');
+	const Mediciones = await Medicion.find().where('Username').equals(req.params.Us).where('FechaCompleta').equals(req.params.Fe.replace(/_/gi,"/")).select('FechaCompleta Volumen Peso Tipo Username');
     
 	res.send(Mediciones);
 
@@ -110,9 +111,9 @@ router.get('/FechasUserVO2MAX/:Us', async (req, res) => {
 // Query 4 
 router.get('/FechasUserLiveVO2MAX', async (req, res) => {
     
-	const Mediciones = await Medicion.limit(1).sort({FechaCompleta: -1}).select('FechaCompleta');
+	const Mediciones = await Medicion.find().limit(1).sort({FechaCompleta: -1}).select('FechaCompleta');
     
-	res.send(Mediciones);
+	res.send(Mediciones[0]);
 
 });
 

@@ -10,4 +10,4 @@ const analisisSchema = new Schema({
 	Username: String
 });
 
-module.exports = model('analisis', analisisSchema);
+module.exports = model('Analisis', analisisSchema);
