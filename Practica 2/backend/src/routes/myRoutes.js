@@ -109,7 +109,7 @@ router.get('/FechasUserVO2MAX/:Us', async (req, res) => {
 });
 
 // Query 4 
-router.get('/FechasUserLiveVO2MAX', async (req, res) => {
+router.get('/Fechas/User/Live/VO2MAX', async (req, res) => {
     
 	const Mediciones = await Medicion.find().limit(1).sort({FechaCompleta: -1}).select('FechaCompleta');
     
