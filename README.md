@@ -1,6 +1,6 @@
 # IOT Projects
 
-## Language: Javascript, HTML, CSS
+## Language: Javascript, HTML, CSS, C++
 
 ## Framwork: Angular
 
