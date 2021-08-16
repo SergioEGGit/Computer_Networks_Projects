@@ -1,9 +1,9 @@
-# Grupo 28
+# Computer Networks Projects
 
-Integrantes:.
+## Language: Javascript, HTML, CSS
 
-  - 201246079	Axel Smaylie López Xum
-  - 201602625	Oscar Alfredo Llamas Lemus
-  - 201801628	Sergio Alexander Echigoyen Gómez
-  - 201801527	Randy Alexander Can Ajuchan
-  - 201603168	Douglas Omar Arreola Martínez  
+## Framwork: Angular
+
+## Tools: Arduino, Android Studio
+
+IOT projects: This repository contains 4 projects focused on IOT solutions, all based on an intelligent accessory which can be managed through a web application and a mobile application.
